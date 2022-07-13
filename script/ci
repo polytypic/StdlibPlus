@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# shellcheck source=common
+. "${BASH_SOURCE%/*}/common"
+
+[ -f dune-project ] || echo '(lang dune 3.3)' > dune-project
+
+build_and_test() {
+  OPTS=(--root=.)
+
+  if [ -n "$PROFILE" ]; then
+     OPTS+=(--profile "$PROFILE")
+  fi
+
+  folded "Building" \
+    opam exec -- dune build "${OPTS[@]}"
+
+  folded "Testing" \
+    timeout 10 opam exec -- dune test "${OPTS[@]}"
+}
+
+if [ "$CI" = true ]; then
+  PROFILE='' build_and_test
+  folded "Cleaning" \
+    opam exec -- dune clean
+fi
+
+PROFILE=release build_and_test
+
+if [ "$CI" = true ]; then
+  if [[ $(git status --porcelain) ]] ; then
+    git status
+    git diff
+    exit 1
+  fi
+fi
