@@ -148,10 +148,10 @@ module Syntax = struct
 
   let env_as ra : (_, _, _) rea = fun _ -> inj @@ Env (fun r -> Return (ra r))
 
-  let with_env rs (xF : (_, _, _) rea) : (_, _, _) rea =
+  let map_env rs (xF : (_, _, _) rea) : (_, _, _) rea =
    fun _ -> inj @@ MapEnv (rs, run xF)
 
-  let replace_env r = with_env (const r)
+  let set_env r = map_env (const r)
 
   (* *)
 
@@ -162,8 +162,8 @@ module Syntax = struct
 
   let get field = env_as @@ Field.get field
   let get_as field fn = env_as @@ fun r -> fn @@ Field.get field r
-  let setting field v = with_env @@ Field.set field v
-  let mapping field fn = with_env @@ Field.map field fn
+  let setting field v = map_env @@ Field.set field v
+  let mapping field fn = map_env @@ Field.map field fn
 
   module LVar = struct
     type ('e, 'a) state =

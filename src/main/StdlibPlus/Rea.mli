@@ -39,8 +39,8 @@ module Syntax : sig
   (* *)
 
   val env_as : ('r -> 'a) -> ('r, 'e, 'a) rea
-  val with_env : ('r -> 's) -> ('s, 'e, 'a) rea -> ('r, 'e, 'a) rea
-  val replace_env : 's -> ('s, 'e, 'a) rea -> ('r, 'e, 'a) rea
+  val map_env : ('r -> 's) -> ('s, 'e, 'a) rea -> ('r, 'e, 'a) rea
+  val set_env : 's -> ('s, 'e, 'a) rea -> ('r, 'e, 'a) rea
 
   (* *)
 
