@@ -7,7 +7,6 @@ module Compare = Compare
 module Constant = Constant
 module EditDistance = EditDistance
 module Exn = Exn
-module Field = Field
 module Filename = Filename
 module Fun = Fun
 module Functor = Functor
@@ -19,6 +18,7 @@ module Loc = Loc
 module Map = Map
 module Monad = Monad
 module Monoid = Monoid
+module Oo = Oo
 module Option = Option
 module Pair = Pair
 module Pos = Pos
@@ -44,4 +44,5 @@ include Functor.Syntax
 include Higher.Syntax
 include Misc.Syntax
 include Monad.Syntax
+include Oo.Syntax
 include Rea.Syntax

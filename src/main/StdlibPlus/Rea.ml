@@ -160,10 +160,10 @@ module Syntax = struct
 
   (* *)
 
-  let get field = env_as @@ Field.get field
-  let get_as field fn = env_as @@ fun r -> fn @@ Field.get field r
-  let setting field v = map_env @@ Field.set field v
-  let mapping field fn = map_env @@ Field.map field fn
+  let get f = env_as (Oo.Prop.get f)
+  let get_as f fn = env_as (Oo.Prop.get f >>> fn)
+  let setting f x = map_env @@ Oo.Prop.set f x
+  let mapping f fn = map_env @@ Oo.Prop.map f fn
 
   module LVar = struct
     type ('e, 'a) state =

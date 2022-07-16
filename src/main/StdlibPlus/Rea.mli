@@ -48,10 +48,15 @@ module Syntax : sig
 
   (* *)
 
-  val get : ('r -> ('f, 'r) Field.t) -> ('r, 'e, 'f) rea
-  val get_as : ('r -> ('f, 'r) Field.t) -> ('f -> 'g) -> ('r, 'e, 'g) rea
-  val setting : ('r -> ('f, 'r) Field.t) -> 'f -> ('r, 'e, 'a) rea uop
-  val mapping : ('r -> ('f, 'r) Field.t) -> 'f uop -> ('r, 'e, 'a) rea uop
+  val get : ((< .. > as 'r) -> 'v Oo.Prop.t) -> ('r, 'e, 'v) rea
+
+  val get_as :
+    ((< .. > as 'r) -> 'v Oo.Prop.t) -> ('v -> 'w) -> ('r, 'e, 'w) rea
+
+  val setting : ((< .. > as 'r) -> 'v Oo.Prop.t) -> 'v -> ('r, 'e, 'a) rea uop
+
+  val mapping :
+    ((< .. > as 'r) -> 'v Oo.Prop.t) -> 'v uop -> ('r, 'e, 'a) rea uop
 
   module LVar : sig
     type ('e, 'a) t
@@ -71,21 +76,23 @@ module Syntax : sig
     val try_modify : ('v -> ('r, 'e, 'v * 'a) rea) -> 'v t -> ('r, 'e, 'a) rea
   end
 
-  val read : ('r -> ('v MVar.t, 'r) Field.t) -> ('r, 'e, 'v) rea
+  val read : ((< .. > as 'r) -> 'v MVar.t Oo.Prop.t) -> ('r, 'e, 'v) rea
 
   val mutate :
-    ('r -> ('v MVar.t, 'r) Field.t) -> ('v -> 'v) -> ('r, 'e, unit) rea
+    ((< .. > as 'r) -> 'v MVar.t Oo.Prop.t) -> ('v -> 'v) -> ('r, 'e, unit) rea
 
   val modify :
-    ('r -> ('v MVar.t, 'r) Field.t) -> ('v -> 'v * 'a) -> ('r, 'e, 'a) rea
+    ((< .. > as 'r) -> 'v MVar.t Oo.Prop.t) ->
+    ('v -> 'v * 'a) ->
+    ('r, 'e, 'a) rea
 
   val try_mutate :
-    ('r -> ('v MVar.t, 'r) Field.t) ->
+    ((< .. > as 'r) -> 'v MVar.t Oo.Prop.t) ->
     ('v -> ('r, 'e, 'v) rea) ->
     ('r, 'e, unit) rea
 
   val try_modify :
-    ('r -> ('v MVar.t, 'r) Field.t) ->
+    ((< .. > as 'r) -> 'v MVar.t Oo.Prop.t) ->
     ('v -> ('r, 'e, 'v * 'a) rea) ->
     ('r, 'e, 'a) rea
 end
