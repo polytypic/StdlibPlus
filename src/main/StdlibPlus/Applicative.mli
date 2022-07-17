@@ -24,10 +24,34 @@ module Syntax : sig
   val tuple'2 : ('f, 'F, 'a) fr -> ('f, 'F, 'b) fr -> ('f, 'F, 'a * 'b) fr
 
   val tuple'3 :
-    ('f, 'F, 'a) fr ->
-    ('f, 'F, 'b) fr ->
-    ('f, 'F, 'c) fr ->
-    ('f, 'F, 'a * 'b * 'c) fr
+    ('f, 'F, 'a1) fr ->
+    ('f, 'F, 'a2) fr ->
+    ('f, 'F, 'a3) fr ->
+    ('f, 'F, 'a1 * 'a2 * 'a3) fr
+
+  val tuple'4 :
+    ('f, 'F, 'a1) fr ->
+    ('f, 'F, 'a2) fr ->
+    ('f, 'F, 'a3) fr ->
+    ('f, 'F, 'a4) fr ->
+    ('f, 'F, 'a1 * 'a2 * 'a3 * 'a4) fr
+
+  val tuple'5 :
+    ('f, 'F, 'a1) fr ->
+    ('f, 'F, 'a2) fr ->
+    ('f, 'F, 'a3) fr ->
+    ('f, 'F, 'a4) fr ->
+    ('f, 'F, 'a5) fr ->
+    ('f, 'F, 'a1 * 'a2 * 'a3 * 'a4 * 'a5) fr
+
+  val tuple'6 :
+    ('f, 'F, 'a1) fr ->
+    ('f, 'F, 'a2) fr ->
+    ('f, 'F, 'a3) fr ->
+    ('f, 'F, 'a4) fr ->
+    ('f, 'F, 'a5) fr ->
+    ('f, 'F, 'a6) fr ->
+    ('f, 'F, 'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6) fr
 
   (* *)
 

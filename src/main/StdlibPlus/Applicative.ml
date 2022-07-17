@@ -24,9 +24,26 @@ module Syntax = struct
 
   let tuple'2 = ( and+ )
 
-  let tuple'3 xM yM zM =
-    let+ x = xM and+ y = yM and+ z = zM in
-    (x, y, z)
+  let tuple'3 x1M x2M x3M =
+    let+ x1 = x1M and+ x2 = x2M and+ x3 = x3M in
+    (x1, x2, x3)
+
+  let tuple'4 x1M x2M x3M x4M =
+    let+ x1 = x1M and+ x2 = x2M and+ x3 = x3M and+ x4 = x4M in
+    (x1, x2, x3, x4)
+
+  let tuple'5 x1M x2M x3M x4M x5M =
+    let+ x1 = x1M and+ x2 = x2M and+ x3 = x3M and+ x4 = x4M and+ x5 = x5M in
+    (x1, x2, x3, x4, x5)
+
+  let tuple'6 x1M x2M x3M x4M x5M x6M =
+    let+ x1 = x1M
+    and+ x2 = x2M
+    and+ x3 = x3M
+    and+ x4 = x4M
+    and+ x5 = x5M
+    and+ x6 = x6M in
+    (x1, x2, x3, x4, x5, x6)
 
   (* *)
 
