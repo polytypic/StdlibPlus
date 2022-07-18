@@ -23,28 +23,28 @@ let both f l r = match (l, r) with Some l, Some r -> Some (f l r) | _ -> None
 
 include Higher.New'1 (Stdlib.Option) ()
 
-type 'a fr = < f Monad.t ; f Alternative.t > -> ('a, f) app'1
+type 'a fr = < f Monad.t ; f Alternative.t > -> (f, 'a) app'1
 
 let methods =
   object
-    method map : 'a 'b. ('a, 'b, _) Functor.map =
+    method map : 'a 'b. (_, 'a, 'b) Functor.map =
       fun xy xF -> inj (map xy (prj xF))
 
-    method return : 'a. ('a, _) Applicative.return = fun x -> inj (Some x)
+    method return : 'a. (_, 'a) Applicative.return = fun x -> inj (Some x)
 
-    method pair : 'a 'b. ('a, 'b, _) Applicative.pair =
+    method pair : 'a 'b. (_, 'a, 'b) Applicative.pair =
       fun xF yF ->
         inj
           (match (prj xF, prj yF) with
           | Some x, Some y -> Some (x, y)
           | _ -> None)
 
-    method bind : 'a 'b. ('a, 'b, _) Monad.bind =
+    method bind : 'a 'b. (_, 'a, 'b) Monad.bind =
       fun xyF xF -> inj (bind (prj xF) (fun x -> prj (xyF x)))
 
-    method zero : 'a. ('a, _) Alternative.zero = inj None
+    method zero : 'a. (_, 'a) Alternative.zero = inj None
 
-    method alt : 'a. ('a, _) Alternative.alt =
+    method alt : 'a. (_, 'a) Alternative.alt =
       fun lA rA ->
         inj
           (match (prj lA, prj rA) with

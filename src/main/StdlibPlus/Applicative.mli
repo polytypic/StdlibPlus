@@ -1,14 +1,14 @@
 open Higher.Syntax
 
-type ('a, 'f) return = 'a -> ('a, 'f) app'1
-type ('a, 'b, 'f) pair = ('a, 'f) app'1 -> ('b, 'f) app'1 -> ('a * 'b, 'f) app'1
+type ('f, 'a) return = 'a -> ('f, 'a) app'1
+type ('f, 'a, 'b) pair = ('f, 'a) app'1 -> ('f, 'b) app'1 -> ('f, 'a * 'b) app'1
 
 type 'f t =
   < 'f Functor.t
-  ; return : 'a. ('a, 'f) return
-  ; pair : 'a 'b. ('a, 'b, 'f) pair >
+  ; return : 'a. ('f, 'a) return
+  ; pair : 'a 'b. ('f, 'a, 'b) pair >
 
-type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('a, 'f) app'1
+type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('f, 'a) app'1
 type ('f, 'a) frm = ('f, 'f t, 'a) fr
 
 module Syntax : sig

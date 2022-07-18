@@ -89,20 +89,20 @@ include
     end)
     ()
 
-type ('r, 'e, 'a) fr = ('r, 'e, f) app'2 Monad.t -> ('r, 'e, 'a, f) app'3
+type ('r, 'e, 'a) fr = (f, 'r, 'e) app'2 Monad.t -> (f, 'r, 'e, 'a) app'3
 
 let methods =
   object
-    method map : 'a 'b. ('a, 'b, _) Functor.map =
+    method map : 'a 'b. (_, 'a, 'b) Functor.map =
       fun xy xF -> inj @@ Bind (prj xF, fun x -> Return (xy x))
 
-    method return : 'a. ('a, _) Applicative.return = fun x -> inj (Return x)
+    method return : 'a. (_, 'a) Applicative.return = fun x -> inj (Return x)
 
-    method pair : 'a 'b. ('a, 'b, _) Applicative.pair =
+    method pair : 'a 'b. (_, 'a, 'b) Applicative.pair =
       fun xF yF ->
         inj (Bind (prj xF, fun x -> Bind (prj yF, fun y -> Return (x, y))))
 
-    method bind : 'a 'b. ('a, 'b, _) Monad.bind =
+    method bind : 'a 'b. (_, 'a, 'b) Monad.bind =
       fun xyF xF -> inj @@ Bind (prj xF, fun x -> prj (xyF x))
   end
 

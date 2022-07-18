@@ -5,7 +5,7 @@ type (-'r, +'e, +'a) t
 
 include Higher.F'3 with type ('r, 'e, 'a) t'3 = ('r, 'e, 'a) t
 
-type ('r, 'e, 'a) fr = ('r, 'e, f) app'2 Monad.t -> ('r, 'e, 'a, f) app'3
+type ('r, 'e, 'a) fr = (f, 'r, 'e) app'2 Monad.t -> (f, 'r, 'e, 'a) app'3
 
 module Syntax : sig
   type ('r, 'e, 'a) rea = ('r, 'e, 'a) fr

@@ -1,9 +1,9 @@
 open Higher.Syntax
 
-type ('a, 'f) zero = ('a, 'f) app'1
-type ('a, 'f) alt = ('a, 'f) app'1 -> ('a, 'f) app'1 -> ('a, 'f) app'1
-type 'f t = < zero : 'a. ('a, 'f) zero ; alt : 'a. ('a, 'f) alt >
-type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('a, 'f) app'1
+type ('f, 'a) zero = ('f, 'a) app'1
+type ('f, 'a) alt = ('f, 'a) app'1 -> ('f, 'a) app'1 -> ('f, 'a) app'1
+type 'f t = < zero : 'a. ('f, 'a) zero ; alt : 'a. ('f, 'a) alt >
+type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('f, 'a) app'1
 
 module Syntax : sig
   val zero : ('f, 'F, 'a) fr

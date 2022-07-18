@@ -9,13 +9,13 @@ include
 
 let methods =
   object
-    method map : 'a 'b. ('a, 'b, _) Functor.map = fun xy xF -> inj (xy (prj xF))
-    method return : 'a. ('a, _) Applicative.return = inj
+    method map : 'a 'b. (_, 'a, 'b) Functor.map = fun xy xF -> inj (xy (prj xF))
+    method return : 'a. (_, 'a) Applicative.return = inj
 
-    method pair : 'a 'b. ('a, 'b, _) Applicative.pair =
+    method pair : 'a 'b. (_, 'a, 'b) Applicative.pair =
       fun xF yF -> inj (prj xF, prj yF)
 
-    method bind : 'a 'b. ('a, 'b, _) Monad.bind =
+    method bind : 'a 'b. (_, 'a, 'b) Monad.bind =
       fun xyF xF -> inj (prj (xyF (prj xF)))
   end
 

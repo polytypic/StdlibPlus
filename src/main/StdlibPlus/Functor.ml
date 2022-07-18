@@ -1,8 +1,8 @@
 open Higher.Syntax
 
-type ('a, 'b, 'f) map = ('a -> 'b) -> ('a, 'f) app'1 -> ('b, 'f) app'1
-type 'f t = < map : 'a 'b. ('a, 'b, 'f) map >
-type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('a, 'f) app'1
+type ('f, 'a, 'b) map = ('a -> 'b) -> ('f, 'a) app'1 -> ('f, 'b) app'1
+type 'f t = < map : 'a 'b. ('f, 'a, 'b) map >
+type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('f, 'a) app'1
 type ('f, 'a) frm = ('f, 'f t, 'a) fr
 
 module Syntax = struct
