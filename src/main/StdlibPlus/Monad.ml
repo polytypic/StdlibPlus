@@ -5,8 +5,8 @@ type ('f, 'a, 'b) bind =
   ('a -> ('f, 'b) app'1) -> ('f, 'a) app'1 -> ('f, 'b) app'1
 
 type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) bind >
-type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('f, 'a) app'1
-type ('f, 'a) frm = ('f, 'f t, 'a) fr
+type ('f, 'a, 'D) fr = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
+type ('f, 'a) frm = ('f, 'a, 'f t) fr
 
 module Syntax = struct
   let ( let* ) xM xyM : (_, _, _) fr =

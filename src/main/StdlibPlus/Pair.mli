@@ -13,13 +13,13 @@ val share_phys_eq : 'a bop -> 'b bop -> ('a * 'b) bop
 (* *)
 
 val map_fr :
-  ('a -> ('f, 'F, 'b) Applicative.fr) ->
-  ('c -> ('f, 'F, 'd) Applicative.fr) ->
+  ('a -> ('f, 'b, 'D) Applicative.fr) ->
+  ('c -> ('f, 'd, 'D) Applicative.fr) ->
   'a * 'c ->
-  ('f, 'F, 'b * 'd) Applicative.fr
+  ('f, 'b * 'd, 'D) Applicative.fr
 
 val map_phys_eq_fr :
-  ('a -> ('f, 'F, 'a) Applicative.fr) ->
-  ('b -> ('f, 'F, 'b) Applicative.fr) ->
+  ('a -> ('f, 'a, 'D) Applicative.fr) ->
+  ('b -> ('f, 'b, 'D) Applicative.fr) ->
   'a * 'b ->
-  ('f, 'F, 'a * 'b) Applicative.fr
+  ('f, 'a * 'b, 'D) Applicative.fr

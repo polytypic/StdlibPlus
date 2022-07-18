@@ -9,8 +9,8 @@ type 'f t =
   ; return : 'a. ('f, 'a) return
   ; pair : 'a 'b. ('f, 'a, 'b) pair >
 
-type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('f, 'a) app'1
-type ('f, 'a) frm = ('f, 'f t, 'a) fr
+type ('f, 'a, 'D) fr = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
+type ('f, 'a) frm = ('f, 'a, 'f t) fr
 
 module Syntax = struct
   let return x : (_, _, _) fr = fun f -> f#return x

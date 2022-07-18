@@ -5,27 +5,27 @@ type ('f, 'a, 'b) bind =
   ('a -> ('f, 'b) app'1) -> ('f, 'a) app'1 -> ('f, 'b) app'1
 
 type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) bind >
-type ('f, 'F, 'a) fr = (< 'f t ; .. > as 'F) -> ('f, 'a) app'1
-type ('f, 'a) frm = ('f, 'f t, 'a) fr
+type ('f, 'a, 'D) fr = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
+type ('f, 'a) frm = ('f, 'a, 'f t) fr
 
 module Syntax : sig
-  val ( let* ) : ('f, 'F, 'a) fr -> ('a -> ('f, 'F, 'b) fr) -> ('f, 'F, 'b) fr
-  val ( and* ) : ('f, 'F, 'a) fr -> ('f, 'F, 'b) fr -> ('f, 'F, 'a * 'b) fr
+  val ( let* ) : ('f, 'a, 'D) fr -> ('a -> ('f, 'b, 'D) fr) -> ('f, 'b, 'D) fr
+  val ( and* ) : ('f, 'a, 'D) fr -> ('f, 'b, 'D) fr -> ('f, 'a * 'b, 'D) fr
 
   (* *)
 
-  val ( >>= ) : ('f, 'F, 'a) fr -> ('a -> ('f, 'F, 'b) fr) -> ('f, 'F, 'b) fr
-  val ( >> ) : ('f, 'F, unit) fr -> ('f, 'F, 'a) fr -> ('f, 'F, 'a) fr
+  val ( >>= ) : ('f, 'a, 'D) fr -> ('a -> ('f, 'b, 'D) fr) -> ('f, 'b, 'D) fr
+  val ( >> ) : ('f, unit, 'D) fr -> ('f, 'a, 'D) fr -> ('f, 'a, 'D) fr
 
   val ( >=> ) :
-    ('a -> ('f, 'F, 'b) fr) -> ('b -> ('f, 'F, 'c) fr) -> 'a -> ('f, 'F, 'c) fr
+    ('a -> ('f, 'b, 'D) fr) -> ('b -> ('f, 'c, 'D) fr) -> 'a -> ('f, 'c, 'D) fr
 
   (* *)
 
-  val ( ||| ) : ('f, 'F, bool) fr bop
-  val ( &&& ) : ('f, 'F, bool) fr bop
+  val ( ||| ) : ('f, bool, 'D) fr bop
+  val ( &&& ) : ('f, bool, 'D) fr bop
 
   (* *)
 
-  val delay : (unit -> ('f, 'F, 'a) fr) -> ('f, 'F, 'a) fr
+  val delay : (unit -> ('f, 'a, 'D) fr) -> ('f, 'a, 'D) fr
 end

@@ -19,73 +19,73 @@ val fold_left3 :
 (* *)
 
 val fold_left_fr :
-  ('a -> 'b -> ('f, 'F, 'a) Monad.fr) -> 'a -> 'b t -> ('f, 'F, 'a) Monad.fr
+  ('a -> 'b -> ('f, 'a, 'D) Monad.fr) -> 'a -> 'b t -> ('f, 'a, 'D) Monad.fr
 
 val fold_left2_fr :
-  ('a -> 'b -> 'c -> ('f, 'F, 'a) Monad.fr) ->
+  ('a -> 'b -> 'c -> ('f, 'a, 'D) Monad.fr) ->
   'a ->
   'b t ->
   'c t ->
-  ('f, 'F, 'a) Monad.fr
+  ('f, 'a, 'D) Monad.fr
 
 val fold_left3_fr :
-  ('a -> 'b -> 'c -> 'd -> ('f, 'F, 'a) Monad.fr) ->
+  ('a -> 'b -> 'c -> 'd -> ('f, 'a, 'D) Monad.fr) ->
   'a ->
   'b t ->
   'c t ->
   'd t ->
-  ('f, 'F, 'a) Monad.fr
+  ('f, 'a, 'D) Monad.fr
 
 (* *)
 
-val iter_fr : ('a -> ('f, 'F, unit) Monad.fr) -> 'a t -> ('f, 'F, unit) Monad.fr
+val iter_fr : ('a -> ('f, unit, 'D) Monad.fr) -> 'a t -> ('f, unit, 'D) Monad.fr
 
 val iter2_fr :
-  ('a -> 'b -> ('f, 'F, unit) Monad.fr) ->
+  ('a -> 'b -> ('f, unit, 'D) Monad.fr) ->
   'a t ->
   'b t ->
-  ('f, 'F, unit) Monad.fr
+  ('f, unit, 'D) Monad.fr
 
 val iter3_fr :
-  ('a -> 'b -> 'c -> ('f, 'F, unit) Monad.fr) ->
+  ('a -> 'b -> 'c -> ('f, unit, 'D) Monad.fr) ->
   'a t ->
   'b t ->
   'c t ->
-  ('f, 'F, unit) Monad.fr
+  ('f, unit, 'D) Monad.fr
 
 (* *)
 
 val for_all_fr :
-  ('a -> ('f, 'F, bool) Monad.fr) -> 'a t -> ('f, 'F, bool) Monad.fr
+  ('a -> ('f, bool, 'D) Monad.fr) -> 'a t -> ('f, bool, 'D) Monad.fr
 
 val exists_fr :
-  ('a -> ('f, 'F, bool) Monad.fr) -> 'a t -> ('f, 'F, bool) Monad.fr
+  ('a -> ('f, bool, 'D) Monad.fr) -> 'a t -> ('f, bool, 'D) Monad.fr
 
 (* *)
 
 val find_opt_fr :
-  ('a -> ('f, 'F, bool) Monad.fr) -> 'a t -> ('f, 'F, 'a option) Monad.fr
+  ('a -> ('f, bool, 'D) Monad.fr) -> 'a t -> ('f, 'a option, 'D) Monad.fr
 
 val find_map_fr :
-  ('a -> ('f, 'F, 'b option) Monad.fr) -> 'a t -> ('f, 'F, 'b option) Monad.fr
+  ('a -> ('f, 'b option, 'D) Monad.fr) -> 'a t -> ('f, 'b option, 'D) Monad.fr
 
 (* *)
 
-val map_m : ('a -> ('f, 'F, 'b) Monad.fr) -> 'a t -> ('f, 'F, 'b t) Monad.fr
+val map_m : ('a -> ('f, 'b, 'D) Monad.fr) -> 'a t -> ('f, 'b t, 'D) Monad.fr
 
 val map_fr :
-  ('a -> ('f, 'F, 'b) Applicative.fr) -> 'a t -> ('f, 'F, 'b t) Applicative.fr
+  ('a -> ('f, 'b, 'D) Applicative.fr) -> 'a t -> ('f, 'b t, 'D) Applicative.fr
 
 val map2_fr :
-  ('a -> 'b -> ('f, 'F, 'c) Applicative.fr) ->
+  ('a -> 'b -> ('f, 'c, 'D) Applicative.fr) ->
   'a t ->
   'b t ->
-  ('f, 'F, 'c t) Applicative.fr
+  ('f, 'c t, 'D) Applicative.fr
 
 val map_phys_eq_fr :
-  ('a -> ('f, 'F, 'a) Applicative.fr) -> 'a t -> ('f, 'F, 'a t) Applicative.fr
+  ('a -> ('f, 'a, 'D) Applicative.fr) -> 'a t -> ('f, 'a t, 'D) Applicative.fr
 
 (* *)
 
 val filter_fr :
-  ('a -> ('f, 'F, bool) Applicative.fr) -> 'a t -> ('f, 'F, 'a t) Applicative.fr
+  ('a -> ('f, bool, 'D) Applicative.fr) -> 'a t -> ('f, 'a t, 'D) Applicative.fr

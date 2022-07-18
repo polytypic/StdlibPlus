@@ -35,17 +35,17 @@ val to_exists :
 
 val to_exists_fr :
   (('a -> (('a Cat.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
-  ('a -> ('f, 'F, bool) Monad.fr) ->
+  ('a -> ('f, bool, 'D) Monad.fr) ->
   's ->
-  ('f, 'F, bool) Monad.fr
+  ('f, bool, 'D) Monad.fr
 
 val to_iter_fr :
-  (('a -> ((('f, 'F, unit) Monad.fr Constant.f'1, 'I) Applicative.frm as 'R)) ->
+  (('a -> ((('f, unit, 'D) Monad.fr Constant.f'1, 'I) Applicative.frm as 'R)) ->
   's ->
   'R) ->
-  ('a -> ('f, 'F, unit) Monad.fr) ->
+  ('a -> ('f, unit, 'D) Monad.fr) ->
   's ->
-  ('f, 'F, unit) Monad.fr
+  ('f, unit, 'D) Monad.fr
 
 val to_find_map :
   (('a -> (('b Option.t Lazy.t Constant.f'1, 'I) Applicative.frm as 'R)) ->
@@ -57,9 +57,9 @@ val to_find_map :
 
 val to_find_map_fr :
   (('a -> (('a Cat.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
-  ('a -> ('f, 'F, 'b Option.t) Monad.fr) ->
+  ('a -> ('f, 'b Option.t, 'D) Monad.fr) ->
   's ->
-  ('f, 'F, 'b Option.t) Monad.fr
+  ('f, 'b Option.t, 'D) Monad.fr
 
 val to_collect :
   (('a -> (('a Cat.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
