@@ -23,7 +23,7 @@ let both f l r = match (l, r) with Some l, Some r -> Some (f l r) | _ -> None
 
 include Higher.New'1 (Stdlib.Option) ()
 
-type 'a fr = < f Monad.t ; f Alternative.t > -> (f, 'a) app'1
+type 'a fr = < f Monad.t ; f Alternative.t > -> 'a f'1
 
 let methods =
   object

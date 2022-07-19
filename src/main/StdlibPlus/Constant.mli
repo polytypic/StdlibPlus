@@ -4,9 +4,6 @@ type ('c, 'a) t
 
 include Higher.F'2 with type ('c, 'a) t'2 = ('c, 'a) t
 
-type 'c f'1 = (f, 'c) app'1
-type ('c, 'a) f'2 = (f, 'c, 'a) app'2
-
 val ( let+ ) : ('c f'1, 'a, 'b) Functor.map
 
 (* *)

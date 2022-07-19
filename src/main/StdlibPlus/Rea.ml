@@ -89,8 +89,6 @@ include
     end)
     ()
 
-type ('r, 'e, 'a) fr = (f, 'r, 'e) app'2 Monad.t -> (f, 'r, 'e, 'a) app'3
-
 let methods =
   object
     method map : 'a 'b. (_, 'a, 'b) Functor.map =
@@ -109,7 +107,7 @@ let methods =
 let run xF = xF methods |> prj
 
 module Syntax = struct
-  type ('r, 'e, 'a) rea = ('r, 'e, 'a) fr
+  type ('r, 'e, 'a) rea = (('r, 'e) f'2, 'a) Monad.frm
 
   let start r (uF : (_, _, _) rea) = push @@ Work (r, run uF)
 

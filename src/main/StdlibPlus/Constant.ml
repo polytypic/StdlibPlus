@@ -17,9 +17,6 @@ include
 let inject x = inj @@ inject x
 let project x = project @@ prj x
 
-type 'c f'1 = (f, 'c) app'1
-type ('c, 'a) f'2 = (f, 'c, 'a) app'2
-
 (* *)
 
 let run m xF = xF m |> project

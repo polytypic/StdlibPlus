@@ -20,6 +20,6 @@ val both : ('a -> 'b -> 'c) -> 'a t -> 'b t -> 'c t
 
 include Higher.F'1 with type 'a t'1 = 'a t
 
-type 'a fr = < f Monad.t ; f Alternative.t > -> (f, 'a) app'1
+type 'a fr = < f Monad.t ; f Alternative.t > -> 'a f'1
 
 val run : 'a fr -> 'a t
