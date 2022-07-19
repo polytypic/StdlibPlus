@@ -5,14 +5,11 @@ type ('f, 'a, 'b) bind =
   ('a -> ('f, 'b) app'1) -> ('f, 'a) app'1 -> ('f, 'b) app'1
 
 type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) bind >
-type ('f, 'a, 'D) fr = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
-type ('f, 'a) frm = ('f, 'a, 'f t) fr
+type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
 module Syntax = struct
-  let ( let* ) xM xyM : (_, _, _) fr =
-   fun f -> xM f |> f#bind (fun x -> xyM x f)
-
-  let ( and* ) xM yM : (_, _, _) fr = fun f -> f#pair (xM f) (yM f)
+  let ( let* ) xM xyM : (_, _, _) r = fun f -> xM f |> f#bind (fun x -> xyM x f)
+  let ( and* ) xM yM : (_, _, _) r = fun f -> f#pair (xM f) (yM f)
 
   (* *)
 

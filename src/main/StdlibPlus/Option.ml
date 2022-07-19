@@ -1,4 +1,3 @@
-open Higher.Syntax
 open Functor.Syntax
 open Applicative.Syntax
 include Stdlib.Option

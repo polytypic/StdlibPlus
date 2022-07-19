@@ -1,4 +1,3 @@
-open Higher.Syntax
 open Applicative.Syntax
 open Monad.Syntax
 
@@ -13,6 +12,9 @@ include
       type nonrec ('c, 'a) t = ('c, 'a) t
     end)
     ()
+
+type ('c, 'a) fr = 'c f'1 Functor.t -> ('c, 'a) f'2
+type ('c, 'a) ar = 'c f'1 Applicative.t -> ('c, 'a) f'2
 
 let inject x = inj @@ inject x
 let project x = project @@ prj x

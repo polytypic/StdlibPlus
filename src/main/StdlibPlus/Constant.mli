@@ -1,8 +1,9 @@
-open Higher.Syntax
-
 type ('c, 'a) t
 
 include Higher.F'2 with type ('c, 'a) t'2 = ('c, 'a) t
+
+type ('c, 'a) fr = 'c f'1 Functor.t -> ('c, 'a) f'2
+type ('c, 'a) ar = 'c f'1 Applicative.t -> ('c, 'a) f'2
 
 val ( let+ ) : ('c f'1, 'a, 'b) Functor.map
 
@@ -27,4 +28,4 @@ val cat_m : 'a Cat.t f'1 Applicative.t
 val or_lm : bool Lazy.t f'1 Applicative.t
 val option_lm : 'a Option.t Lazy.t f'1 Applicative.t
 val option_m : 'a Option.t f'1 Applicative.t
-val unit_fr_m : ('f, unit, 'D) Monad.fr f'1 Applicative.t
+val unit_fr_m : ('f, unit, 'D) Monad.r f'1 Applicative.t

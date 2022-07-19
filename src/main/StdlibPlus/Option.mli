@@ -1,14 +1,13 @@
-open Higher.Syntax
 include module type of Stdlib.Option
 
 val map_fr :
-  ('a -> ('f, 'b, 'D) Applicative.fr) -> 'a t -> ('f, 'b t, 'D) Applicative.fr
+  ('a -> ('f, 'b, 'D) Applicative.r) -> 'a t -> ('f, 'b t, 'D) Applicative.r
 
 val map_eq_fr :
-  ('a -> ('f, 'a, 'D) Applicative.fr) -> 'a t -> ('f, 'a t, 'D) Applicative.fr
+  ('a -> ('f, 'a, 'D) Applicative.r) -> 'a t -> ('f, 'a t, 'D) Applicative.r
 
 val iter_fr :
-  ('a -> ('f, unit, 'D) Applicative.fr) -> 'a t -> ('f, unit, 'D) Applicative.fr
+  ('a -> ('f, unit, 'D) Applicative.r) -> 'a t -> ('f, unit, 'D) Applicative.r
 
 (* *)
 

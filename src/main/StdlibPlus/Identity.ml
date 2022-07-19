@@ -19,4 +19,6 @@ let methods =
       fun xyF xF -> inj (prj (xyF (prj xF)))
   end
 
+type 'a mr = f Monad.t -> 'a f'1
+
 let run xF = xF methods |> prj

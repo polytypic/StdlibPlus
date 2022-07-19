@@ -9,12 +9,11 @@ type 'f t =
   ; return : 'a. ('f, 'a) return
   ; pair : 'a 'b. ('f, 'a, 'b) pair >
 
-type ('f, 'a, 'D) fr = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
-type ('f, 'a) frm = ('f, 'a, 'f t) fr
+type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
 module Syntax = struct
-  let return x : (_, _, _) fr = fun f -> f#return x
-  let ( and+ ) xM yM : (_, _, _) fr = fun f -> f#pair (xM f) (yM f)
+  let return x : (_, _, _) r = fun f -> f#return x
+  let ( and+ ) xM yM : (_, _, _) r = fun f -> f#pair (xM f) (yM f)
 
   (* *)
 
@@ -47,7 +46,7 @@ module Syntax = struct
 
   (* *)
 
-  let unit : (_, _, _) fr = fun f -> f#return ()
+  let unit : (_, _, _) r = fun f -> f#return ()
   let do_unless c uM = if c then unit else uM
   let do_when c uM = if c then uM else unit
 

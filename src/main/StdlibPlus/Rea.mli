@@ -1,4 +1,3 @@
-open Higher.Syntax
 open Misc.Syntax
 
 type (-'r, +'e, +'a) t
@@ -6,7 +5,7 @@ type (-'r, +'e, +'a) t
 include Higher.F'3 with type ('r, 'e, 'a) t'3 = ('r, 'e, 'a) t
 
 module Syntax : sig
-  type ('r, 'e, 'a) rea = (('r, 'e) f'2, 'a) Monad.frm
+  type ('r, 'e, 'a) rea = ('r, 'e) f'2 Monad.t -> ('r, 'e, 'a) f'3
 
   val start : 'r -> ('r, Zero.t, unit) rea -> unit
 

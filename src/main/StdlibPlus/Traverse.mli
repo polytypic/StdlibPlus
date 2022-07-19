@@ -1,16 +1,9 @@
 open Misc.Syntax
 
 val to_map :
-  (('a -> (Identity.f, 'b) Monad.frm) -> 's -> (Identity.f, 't) Monad.frm) ->
-  ('a -> 'b) ->
-  's ->
-  't
+  (('a -> 'b Identity.mr) -> 's -> 't Identity.mr) -> ('a -> 'b) -> 's -> 't
 
-val to_set :
-  (('a -> (Identity.f, 'b) Monad.frm) -> 's -> (Identity.f, 't) Monad.frm) ->
-  'b ->
-  's ->
-  't
+val to_set : (('a -> 'b Identity.mr) -> 's -> 't Identity.mr) -> 'b -> 's -> 't
 
 val to_map_constant :
   (('a -> ('M -> ('c, 'I) Constant.f'2 as 'R)) -> 's -> 'R) ->
@@ -19,55 +12,46 @@ val to_map_constant :
   's ->
   'c
 
-val to_get :
-  (('a -> (('a Constant.f'1, 'I) Functor.frm as 'R)) -> 's -> 'R) -> 's -> 'a
+val to_get : (('a -> (('a, 'I) Constant.fr as 'R)) -> 's -> 'R) -> 's -> 'a
 
 val to_get_opt :
-  (('a -> (('a Option.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
-  's ->
-  'a Option.t
+  (('a -> (('a option, 'I) Constant.ar as 'R)) -> 's -> 'R) -> 's -> 'a option
 
 val to_exists :
-  (('a -> ((bool Lazy.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
+  (('a -> ((bool Lazy.t, 'I) Constant.ar as 'R)) -> 's -> 'R) ->
   ('a -> bool) ->
   's ->
   bool
 
 val to_exists_fr :
-  (('a -> (('a Cat.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
-  ('a -> ('f, bool, 'D) Monad.fr) ->
+  (('a -> (('a Cat.t, 'I) Constant.ar as 'R)) -> 's -> 'R) ->
+  ('a -> ('f, bool, 'D) Monad.r) ->
   's ->
-  ('f, bool, 'D) Monad.fr
+  ('f, bool, 'D) Monad.r
 
 val to_iter_fr :
-  (('a -> ((('f, unit, 'D) Monad.fr Constant.f'1, 'I) Applicative.frm as 'R)) ->
+  (('a -> ((('f, unit, 'D) Monad.r, 'I) Constant.ar as 'R)) -> 's -> 'R) ->
+  ('a -> ('f, unit, 'D) Monad.r) ->
   's ->
-  'R) ->
-  ('a -> ('f, unit, 'D) Monad.fr) ->
-  's ->
-  ('f, unit, 'D) Monad.fr
+  ('f, unit, 'D) Monad.r
 
 val to_find_map :
-  (('a -> (('b Option.t Lazy.t Constant.f'1, 'I) Applicative.frm as 'R)) ->
+  (('a -> (('b option Lazy.t, 'I) Constant.ar as 'R)) -> 's -> 'R) ->
+  ('a -> 'b option) ->
   's ->
-  'R) ->
-  ('a -> 'b Option.t) ->
-  's ->
-  'b Option.t
+  'b option
 
 val to_find_map_fr :
-  (('a -> (('a Cat.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
-  ('a -> ('f, 'b Option.t, 'D) Monad.fr) ->
+  (('a -> (('a Cat.t, 'I) Constant.ar as 'R)) -> 's -> 'R) ->
+  ('a -> ('f, 'b option, 'D) Monad.r) ->
   's ->
-  ('f, 'b Option.t, 'D) Monad.fr
+  ('f, 'b option, 'D) Monad.r
 
 val to_collect :
-  (('a -> (('a Cat.t Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
-  's ->
-  'a list
+  (('a -> (('a Cat.t, 'I) Constant.ar as 'R)) -> 's -> 'R) -> 's -> 'a list
 
 val to_map_reduce :
-  (('a -> (('m Constant.f'1, 'I) Applicative.frm as 'R)) -> 's -> 'R) ->
+  (('a -> (('m, 'I) Constant.ar as 'R)) -> 's -> 'R) ->
   'm bop ->
   'm ->
   ('a -> 'm) ->

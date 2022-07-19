@@ -8,63 +8,62 @@ type 'f t =
   ; return : 'a. ('f, 'a) return
   ; pair : 'a 'b. ('f, 'a, 'b) pair >
 
-type ('f, 'a, 'D) fr = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
-type ('f, 'a) frm = ('f, 'a, 'f t) fr
+type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
 module Syntax : sig
-  val return : 'a -> ('f, 'a, 'D) fr
-  val ( and+ ) : ('f, 'a, 'D) fr -> ('f, 'b, 'D) fr -> ('f, 'a * 'b, 'D) fr
+  val return : 'a -> ('f, 'a, 'D) r
+  val ( and+ ) : ('f, 'a, 'D) r -> ('f, 'b, 'D) r -> ('f, 'a * 'b, 'D) r
 
   (* *)
 
-  val ( <*> ) : ('f, 'a, 'D) fr -> ('f, 'b, 'D) fr -> ('f, 'a * 'b, 'D) fr
+  val ( <*> ) : ('f, 'a, 'D) r -> ('f, 'b, 'D) r -> ('f, 'a * 'b, 'D) r
 
   (* *)
 
-  val tuple'2 : ('f, 'a, 'D) fr -> ('f, 'b, 'D) fr -> ('f, 'a * 'b, 'D) fr
+  val tuple'2 : ('f, 'a, 'D) r -> ('f, 'b, 'D) r -> ('f, 'a * 'b, 'D) r
 
   val tuple'3 :
-    ('f, 'a1, 'D) fr ->
-    ('f, 'a2, 'D) fr ->
-    ('f, 'a3, 'D) fr ->
-    ('f, 'a1 * 'a2 * 'a3, 'D) fr
+    ('f, 'a1, 'D) r ->
+    ('f, 'a2, 'D) r ->
+    ('f, 'a3, 'D) r ->
+    ('f, 'a1 * 'a2 * 'a3, 'D) r
 
   val tuple'4 :
-    ('f, 'a1, 'D) fr ->
-    ('f, 'a2, 'D) fr ->
-    ('f, 'a3, 'D) fr ->
-    ('f, 'a4, 'D) fr ->
-    ('f, 'a1 * 'a2 * 'a3 * 'a4, 'D) fr
+    ('f, 'a1, 'D) r ->
+    ('f, 'a2, 'D) r ->
+    ('f, 'a3, 'D) r ->
+    ('f, 'a4, 'D) r ->
+    ('f, 'a1 * 'a2 * 'a3 * 'a4, 'D) r
 
   val tuple'5 :
-    ('f, 'a1, 'D) fr ->
-    ('f, 'a2, 'D) fr ->
-    ('f, 'a3, 'D) fr ->
-    ('f, 'a4, 'D) fr ->
-    ('f, 'a5, 'D) fr ->
-    ('f, 'a1 * 'a2 * 'a3 * 'a4 * 'a5, 'D) fr
+    ('f, 'a1, 'D) r ->
+    ('f, 'a2, 'D) r ->
+    ('f, 'a3, 'D) r ->
+    ('f, 'a4, 'D) r ->
+    ('f, 'a5, 'D) r ->
+    ('f, 'a1 * 'a2 * 'a3 * 'a4 * 'a5, 'D) r
 
   val tuple'6 :
-    ('f, 'a1, 'D) fr ->
-    ('f, 'a2, 'D) fr ->
-    ('f, 'a3, 'D) fr ->
-    ('f, 'a4, 'D) fr ->
-    ('f, 'a5, 'D) fr ->
-    ('f, 'a6, 'D) fr ->
-    ('f, 'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6, 'D) fr
+    ('f, 'a1, 'D) r ->
+    ('f, 'a2, 'D) r ->
+    ('f, 'a3, 'D) r ->
+    ('f, 'a4, 'D) r ->
+    ('f, 'a5, 'D) r ->
+    ('f, 'a6, 'D) r ->
+    ('f, 'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6, 'D) r
 
   (* *)
 
-  val unit : ('f, unit, 'D) fr
-  val do_unless : bool -> ('f, unit, 'D) fr -> ('f, unit, 'D) fr
-  val do_when : bool -> ('f, unit, 'D) fr -> ('f, unit, 'D) fr
+  val unit : ('f, unit, 'D) r
+  val do_unless : bool -> ('f, unit, 'D) r -> ('f, unit, 'D) r
+  val do_when : bool -> ('f, unit, 'D) r -> ('f, unit, 'D) r
 
   (* *)
 
   val lift2 :
-    ('a -> 'b -> 'c) -> ('f, 'a, 'D) fr -> ('f, 'b, 'D) fr -> ('f, 'c, 'D) fr
+    ('a -> 'b -> 'c) -> ('f, 'a, 'D) r -> ('f, 'b, 'D) r -> ('f, 'c, 'D) r
 
   (* *)
 
-  val thunk : (unit -> 'a) -> ('f, 'a, 'D) fr
+  val thunk : (unit -> 'a) -> ('f, 'a, 'D) r
 end

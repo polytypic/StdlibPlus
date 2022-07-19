@@ -1,4 +1,3 @@
-open Higher.Syntax
 open Fun.Syntax
 open Monad.Syntax
 
@@ -107,7 +106,7 @@ let methods =
 let run xF = xF methods |> prj
 
 module Syntax = struct
-  type ('r, 'e, 'a) rea = (('r, 'e) f'2, 'a) Monad.frm
+  type ('r, 'e, 'a) rea = ('r, 'e) f'2 Monad.t -> ('r, 'e, 'a) f'3
 
   let start r (uF : (_, _, _) rea) = push @@ Work (r, run uF)
 
