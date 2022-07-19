@@ -1,8 +1,5 @@
 open Misc.Syntax
-
-type (-'r, +'e, +'a) t
-
-include Higher.F'3 with type ('r, 'e, 'a) t'3 = ('r, 'e, 'a) t
+include Higher.F'3
 
 module Syntax : sig
   type ('r, 'e, 'a) rea = ('r, 'e) f'2 Monad.t -> ('r, 'e, 'a) f'3
