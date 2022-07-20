@@ -89,17 +89,18 @@ include
     ()
 
 let methods =
+  let open Method in
   object
-    method map : 'a 'b. (_, 'a, 'b) Functor.map =
+    method map : 'a 'b. (_, 'a, 'b) map =
       fun xy xF -> inj @@ Bind (prj xF, fun x -> Return (xy x))
 
-    method return : 'a. (_, 'a) Applicative.return = fun x -> inj (Return x)
+    method return : 'a. (_, 'a) return = fun x -> inj (Return x)
 
-    method pair : 'a 'b. (_, 'a, 'b) Applicative.pair =
+    method pair : 'a 'b. (_, 'a, 'b) pair =
       fun xF yF ->
         inj (Bind (prj xF, fun x -> Bind (prj yF, fun y -> Return (x, y))))
 
-    method bind : 'a 'b. (_, 'a, 'b) Monad.bind =
+    method bind : 'a 'b. (_, 'a, 'b) bind =
       fun xyF xF -> inj @@ Bind (prj xF, fun x -> prj (xyF x))
   end
 

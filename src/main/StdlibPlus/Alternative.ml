@@ -1,8 +1,6 @@
 open Higher.Syntax
 
-type ('f, 'a) zero = ('f, 'a) app'1
-type ('f, 'a) alt = ('f, 'a) app'1 -> ('f, 'a) app'1 -> ('f, 'a) app'1
-type 'f t = < zero : 'a. ('f, 'a) zero ; alt : 'a. ('f, 'a) alt >
+type 'f t = < zero : 'a. ('f, 'a) Method.zero ; alt : 'a. ('f, 'a) Method.alt >
 type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
 module Syntax = struct

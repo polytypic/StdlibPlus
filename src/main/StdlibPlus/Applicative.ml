@@ -1,13 +1,10 @@
 open Higher.Syntax
 open Functor.Syntax
 
-type ('f, 'a) return = 'a -> ('f, 'a) app'1
-type ('f, 'a, 'b) pair = ('f, 'a) app'1 -> ('f, 'b) app'1 -> ('f, 'a * 'b) app'1
-
 type 'f t =
   < 'f Functor.t
-  ; return : 'a. ('f, 'a) return
-  ; pair : 'a 'b. ('f, 'a, 'b) pair >
+  ; return : 'a. ('f, 'a) Method.return
+  ; pair : 'a 'b. ('f, 'a, 'b) Method.pair >
 
 type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 

@@ -1,1 +1,1 @@
-type 'a t = < identity : 'a ; combine : 'a -> 'a -> 'a >
+type 'a t = < identity : 'a Method.identity ; combine : 'a Method.combine >
