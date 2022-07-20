@@ -4,20 +4,26 @@ open Applicative.Syntax
 type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) Method.bind >
 type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
+class virtual ['f] of_bind =
+  object (m)
+    method virtual return : 'a. ('f, 'a) Method.return
+    method virtual bind : 'a 'b. ('f, 'a, 'b) Method.bind
+
+    method map : 'a 'b. ('f, 'a, 'b) Method.map =
+      fun xy xF -> xF |> m#bind @@ fun x -> m#return @@ xy x
+
+    method pair : 'a 'b. ('f, 'a, 'b) Method.pair =
+      fun xF yF ->
+        xF |> m#bind @@ fun x -> yF |> m#bind @@ fun y -> m#return (x, y)
+  end
+
 let of_bind
     (m :
       < return : 'a. ('f, 'a) Method.return
       ; bind : 'a 'b. ('f, 'a, 'b) Method.bind >) =
   object
-    method map : 'a 'b. ('f, 'a, 'b) Method.map =
-      fun xy xF -> xF |> m#bind @@ fun x -> m#return @@ xy x
-
+    inherit ['f] of_bind
     method return : 'a. ('f, 'a) Method.return = m#return
-
-    method pair : 'a 'b. ('f, 'a, 'b) Method.pair =
-      fun xF yF ->
-        xF |> m#bind @@ fun x -> yF |> m#bind @@ fun y -> m#return (x, y)
-
     method bind : 'a 'b. ('f, 'a, 'b) Method.bind = m#bind
   end
 

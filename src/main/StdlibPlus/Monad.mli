@@ -4,6 +4,14 @@ open Misc.Syntax
 type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) Method.bind >
 type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
+class virtual ['f] of_bind :
+  object
+    method virtual return : 'a. ('f, 'a) Method.return
+    method virtual bind : 'a 'b. ('f, 'a, 'b) Method.bind
+    method map : 'a 'b. ('f, 'a, 'b) Method.map
+    method pair : 'a 'b. ('f, 'a, 'b) Method.pair
+  end
+
 val of_bind :
   < return : 'a. ('f, 'a) Method.return
   ; bind : 'a 'b. ('f, 'a, 'b) Method.bind > ->
