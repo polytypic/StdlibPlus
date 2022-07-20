@@ -4,6 +4,11 @@ open Misc.Syntax
 type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) Method.bind >
 type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
 
+val of_bind :
+  < return : 'a. ('f, 'a) Method.return
+  ; bind : 'a 'b. ('f, 'a, 'b) Method.bind > ->
+  'f t
+
 module Syntax : sig
   val ( let* ) : ('f, 'a, 'D) r -> ('a -> ('f, 'b, 'D) r) -> ('f, 'b, 'D) r
   val ( and* ) : ('f, 'a, 'D) r -> ('f, 'b, 'D) r -> ('f, 'a * 'b, 'D) r
