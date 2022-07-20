@@ -156,3 +156,28 @@ let rec find_map_fr fn = function
   | [] -> return None
   | x :: xs -> (
     fn x >>= function None -> find_map_fr fn xs | some -> return some)
+
+(* *)
+
+include Higher.New'1 (Stdlib.List) ()
+
+type 'a fr = < f Monad.t ; f Alternative.t > -> 'a f'1
+
+let methods =
+  let open Method in
+  object
+    method map : 'a 'b. (_, 'a, 'b) map = fun xy xF -> inj (map xy (prj xF))
+    method return : 'a. (_, 'a) return = fun x -> inj [x]
+
+    method pair : 'a 'b. (_, 'a, 'b) pair =
+      fun xF yF ->
+        inj (prj xF |> concat_map @@ fun x -> prj yF |> map @@ fun y -> (x, y))
+
+    method bind : 'a 'b. (_, 'a, 'b) bind =
+      fun xyF xF -> inj (concat_map (fun x -> prj (xyF x)) (prj xF))
+
+    method zero : 'a. (_, 'a) zero = inj []
+    method alt : 'a. (_, 'a) alt = fun lA rA -> inj (append (prj lA) (prj rA))
+  end
+
+let run xF = xF methods |> prj

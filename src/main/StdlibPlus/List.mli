@@ -85,3 +85,11 @@ val map_phys_eq_fr :
 
 val filter_fr :
   ('a -> ('f, bool, 'D) Applicative.r) -> 'a t -> ('f, 'a t, 'D) Applicative.r
+
+(* *)
+
+include Higher.F'1 with type 'a t'1 = 'a t
+
+type 'a fr = < f Monad.t ; f Alternative.t > -> 'a f'1
+
+val run : 'a fr -> 'a t
