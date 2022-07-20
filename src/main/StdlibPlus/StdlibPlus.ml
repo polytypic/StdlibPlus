@@ -16,6 +16,7 @@ module JsonString = JsonString
 module List = List
 module Loc = Loc
 module Map = Map
+module Method = Method
 module Monad = Monad
 module Monoid = Monoid
 module Oo = Oo
