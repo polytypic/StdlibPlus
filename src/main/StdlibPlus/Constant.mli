@@ -20,7 +20,7 @@ val run : 'm -> ('m -> ('c, 'a) f'2) -> 'c
 
 (* *)
 
-val of_monoid : < 'c Monoid.t ; .. > -> 'c f'1 Applicative.t
+val of_monoid : 'c #Monoid.t -> 'c f'1 Applicative.t
 
 (* *)
 

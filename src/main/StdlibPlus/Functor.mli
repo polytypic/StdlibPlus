@@ -1,7 +1,11 @@
 open Higher.Syntax
 
-type 'f t = < map : 'a 'b. ('f, 'a, 'b) Method.map >
-type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
+class virtual ['f] t :
+  object
+    method virtual map : 'a 'b. ('f, 'a, 'b) Method.map
+  end
+
+type ('f, 'a, 'D) r = ('f #t as 'D) -> ('f, 'a) app'1
 
 module Syntax : sig
   val ( let+ ) : ('f, 'a, 'D) r -> ('a -> 'b) -> ('f, 'b, 'D) r

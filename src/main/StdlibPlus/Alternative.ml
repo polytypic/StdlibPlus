@@ -1,7 +1,12 @@
 open Higher.Syntax
 
-type 'f t = < zero : 'a. ('f, 'a) Method.zero ; alt : 'a. ('f, 'a) Method.alt >
-type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
+class virtual ['f] t =
+  object
+    method virtual zero : 'a. ('f, 'a) Method.zero
+    method virtual alt : 'a. ('f, 'a) Method.alt
+  end
+
+type ('f, 'a, 'D) r = ('f #t as 'D) -> ('f, 'a) app'1
 
 module Syntax = struct
   let zero : (_, _, _) r = fun f -> f#zero

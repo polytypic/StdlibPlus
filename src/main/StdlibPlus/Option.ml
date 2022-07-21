@@ -25,30 +25,13 @@ include Higher.New'1 (Stdlib.Option) ()
 type 'a fr = < f Monad.t ; f Alternative.t > -> 'a f'1
 
 let methods =
-  let open Method in
   object
-    method map : 'a 'b. (_, 'a, 'b) map = fun xy xF -> inj (map xy (prj xF))
-    method return : 'a. (_, 'a) return = fun x -> inj (Some x)
-
-    method pair : 'a 'b. (_, 'a, 'b) pair =
-      fun xF yF ->
-        inj
-          (match (prj xF, prj yF) with
-          | Some x, Some y -> Some (x, y)
-          | _ -> None)
-
-    method bind : 'a 'b. (_, 'a, 'b) bind =
-      fun xyF xF -> inj (bind (prj xF) (fun x -> prj (xyF x)))
-
-    method zero : 'a. (_, 'a) zero = inj None
-
-    method alt : 'a. (_, 'a) alt =
-      fun lA rA ->
-        inj
-          (match (prj lA, prj rA) with
-          | Some l, _ -> Some l
-          | _, Some r -> Some r
-          | _ -> None)
+    inherit [_] Monad.t
+    method return x = inj (Some x)
+    method bind xyF xF = inj (bind (prj xF) (fun x -> prj (xyF x)))
+    inherit [_] Alternative.t
+    method zero = inj None
+    method alt lA rA = if is_none (prj lA) then rA else lA
   end
 
 let run xF = xF methods |> prj

@@ -1,12 +1,14 @@
 open Higher.Syntax
 open Functor.Syntax
 
-type 'f t =
-  < 'f Functor.t
-  ; return : 'a. ('f, 'a) Method.return
-  ; pair : 'a 'b. ('f, 'a, 'b) Method.pair >
+class virtual ['f] t =
+  object
+    inherit ['f] Functor.t
+    method virtual return : 'a. ('f, 'a) Method.return
+    method virtual pair : 'a 'b. ('f, 'a, 'b) Method.pair
+  end
 
-type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
+type ('f, 'a, 'D) r = ('f #t as 'D) -> ('f, 'a) app'1
 
 module Syntax = struct
   let return x : (_, _, _) r = fun f -> f#return x

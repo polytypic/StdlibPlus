@@ -1,31 +1,15 @@
 open Higher.Syntax
 open Applicative.Syntax
 
-type 'f t = < 'f Applicative.t ; bind : 'a 'b. ('f, 'a, 'b) Method.bind >
-type ('f, 'a, 'D) r = (< 'f t ; .. > as 'D) -> ('f, 'a) app'1
-
-class virtual ['f] of_bind =
+class virtual ['f] t =
   object (m)
-    method virtual return : 'a. ('f, 'a) Method.return
+    inherit ['f] Applicative.t
     method virtual bind : 'a 'b. ('f, 'a, 'b) Method.bind
-
-    method map : 'a 'b. ('f, 'a, 'b) Method.map =
-      fun xy xF -> xF |> m#bind @@ fun x -> m#return @@ xy x
-
-    method pair : 'a 'b. ('f, 'a, 'b) Method.pair =
-      fun xF yF ->
-        xF |> m#bind @@ fun x -> yF |> m#bind @@ fun y -> m#return (x, y)
+    method map xy xF = xF |> m#bind @@ fun x -> m#return (xy x)
+    method pair xF yF = xF |> m#bind @@ fun x -> yF |> m#map @@ fun y -> (x, y)
   end
 
-let of_bind
-    (m :
-      < return : 'a. ('f, 'a) Method.return
-      ; bind : 'a 'b. ('f, 'a, 'b) Method.bind >) =
-  object
-    inherit ['f] of_bind
-    method return : 'a. ('f, 'a) Method.return = m#return
-    method bind : 'a 'b. ('f, 'a, 'b) Method.bind = m#bind
-  end
+type ('f, 'a, 'D) r = ('f #t as 'D) -> ('f, 'a) app'1
 
 module Syntax = struct
   let ( let* ) xM xyM : (_, _, _) r = fun f -> xM f |> f#bind (fun x -> xyM x f)
