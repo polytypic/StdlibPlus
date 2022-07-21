@@ -98,6 +98,7 @@ let methods =
 
     method map : 'a 'b. (_, 'a, 'b) map = Default.map_of m
     method pair : 'a 'b. (_, 'a, 'b) pair = Default.pair_of m
+    method branch : 'a 'b 'c. (_, 'a, 'b, 'c) branch = Default.branch_of m
   end
 
 let run xF = xF methods |> prj

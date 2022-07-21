@@ -7,3 +7,7 @@ val map_of :
 val pair_of :
   < map : 'a 'b. ('f, 'a, 'b) map ; bind : 'a 'b. ('f, 'a, 'b) bind ; .. > ->
   ('f, 'a, 'b) pair
+
+val branch_of :
+  < map : 'a 'b. ('f, 'a, 'b) map ; bind : 'a 'b. ('f, 'a, 'b) bind ; .. > ->
+  ('f, 'a, 'b, 'c) branch

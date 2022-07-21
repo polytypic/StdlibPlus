@@ -11,3 +11,12 @@ let pair_of
       < map : 'a 'b. ('f, 'a, 'b) map ; bind : 'a 'b. ('f, 'a, 'b) bind ; .. >)
     xF yF =
   xF |> m#bind @@ fun x -> yF |> m#map @@ fun y -> (x, y)
+
+let branch_of
+    (m :
+      < map : 'a 'b. ('f, 'a, 'b) map ; bind : 'a 'b. ('f, 'a, 'b) bind ; .. >)
+    xyF xzF yzF =
+  xyF
+  |> m#bind @@ function
+     | Either.Left x -> xzF |> m#map (( |> ) x)
+     | Either.Right y -> yzF |> m#map (( |> ) y)

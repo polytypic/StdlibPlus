@@ -3,10 +3,11 @@ open Misc.Syntax
 
 class virtual ['f] t :
   object
-    inherit ['f] Applicative.t
+    inherit ['f] Selective.t
     method virtual bind : 'a 'b. ('f, 'a, 'b) Method.bind
     method map : 'a 'b. ('f, 'a, 'b) Method.map
     method pair : 'a 'b. ('f, 'a, 'b) Method.pair
+    method branch : 'a 'b 'c. ('f, 'a, 'b, 'c) Method.branch
   end
 
 type ('f, 'a, 'D) r = ('f #t as 'D) -> ('f, 'a) app'1
