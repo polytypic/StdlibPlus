@@ -5,8 +5,8 @@ class virtual ['f] t =
   object (m)
     inherit ['f] Applicative.t
     method virtual bind : 'a 'b. ('f, 'a, 'b) Method.bind
-    method map xy xF = xF |> m#bind @@ fun x -> m#return (xy x)
-    method pair xF yF = xF |> m#bind @@ fun x -> yF |> m#map @@ fun y -> (x, y)
+    method map = Default.map_of m
+    method pair = Default.pair_of m
   end
 
 type ('f, 'a, 'D) r = ('f #t as 'D) -> ('f, 'a) app'1

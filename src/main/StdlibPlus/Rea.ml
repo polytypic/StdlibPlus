@@ -90,18 +90,14 @@ include
 
 let methods =
   let open Method in
-  object
-    method map : 'a 'b. (_, 'a, 'b) map =
-      fun xy xF -> inj @@ Bind (prj xF, fun x -> Return (xy x))
-
+  object (m)
     method return : 'a. (_, 'a) return = fun x -> inj (Return x)
-
-    method pair : 'a 'b. (_, 'a, 'b) pair =
-      fun xF yF ->
-        inj (Bind (prj xF, fun x -> Bind (prj yF, fun y -> Return (x, y))))
 
     method bind : 'a 'b. (_, 'a, 'b) bind =
       fun xyF xF -> inj @@ Bind (prj xF, fun x -> prj (xyF x))
+
+    method map : 'a 'b. (_, 'a, 'b) map = Default.map_of m
+    method pair : 'a 'b. (_, 'a, 'b) pair = Default.pair_of m
   end
 
 let run xF = xF methods |> prj

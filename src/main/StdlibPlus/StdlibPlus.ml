@@ -5,6 +5,7 @@ module Cat = Cat
 module Cats = Cats
 module Compare = Compare
 module Constant = Constant
+module Default = Default
 module EditDistance = EditDistance
 module Exn = Exn
 module Filename = Filename
