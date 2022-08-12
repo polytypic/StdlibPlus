@@ -1,3 +1,4 @@
+open Rea
 open StdlibPlus
 
 (* *)
@@ -8,7 +9,9 @@ let n_failures = ref 0
 
 (* *)
 
-let tests : (string * (unit, exn, unit) rea) list ref = ref []
+let tests :
+    (string * (Tailrec.r, exn, unit, ('D Tailrec.async as 'D)) er) list ref =
+  ref []
 
 (* *)
 
@@ -23,13 +26,9 @@ let pop_all xs =
 let () =
   at_exit @@ fun () ->
   pop_all tests |> List.rev
-  |> List.iter_fr (fun (name, test) ->
+  |> List.iter_er (fun (name, test) ->
          test
-         |> try_in
-              (fun () ->
-                inc n_successes;
-                Printf.printf "  [OK] %s\n" name;
-                unit)
+         |> tryin
               (fun exn ->
                 inc n_failures;
                 (match exn with
@@ -39,6 +38,10 @@ let () =
                 |> List.map (fun line -> "    " ^ line)
                 |> String.concat "\n"
                 |> Printf.printf "[FAIL] %s:\n\n%s\n\n" name;
+                unit)
+              (fun () ->
+                inc n_successes;
+                Printf.printf "  [OK] %s\n" name;
                 unit))
   >>- (fun () ->
         if !n_failures = 0 then
@@ -47,10 +50,10 @@ let () =
           Printf.printf "Ran %d tests:\n- %d successes, and\n- %d failures.\n"
             !n_tests !n_successes !n_failures;
           exit 1))
-  |> start ()
+  |> Tailrec.spawn Tailrec.async
 
 let test name effect =
-  let test = unit >>= fun () -> try effect () with exn -> fail exn in
+  let test = eta'0 @@ fun () -> try effect () with exn -> fail exn in
   inc n_tests;
   push_to tests (name, test)
 

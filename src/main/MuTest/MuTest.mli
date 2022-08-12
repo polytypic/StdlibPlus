@@ -1,8 +1,21 @@
-open StdlibPlus
+open Rea
 
-val test : string -> (unit -> (unit, exn, unit) rea) -> unit
-val verify : bool -> (unit, exn, unit) rea
-val failure : string -> ('r, exn, 'a) rea
+val test :
+  string ->
+  (unit -> (Tailrec.r, exn, unit, ('D Tailrec.async as 'D)) er) ->
+  unit
+
+val verify :
+  bool -> ('R, exn, unit, (< ('R, 'D) pure' ; ('R, 'D) fail' ; .. > as 'D)) er
+
+val failure : string -> ('R, exn, 'a, (('R, 'D) #fail' as 'D)) er
 
 val failuref :
-  ('a, unit, string, string, string, ('r, exn, 'b) rea) format6 -> 'a
+  ( 'a,
+    unit,
+    string,
+    string,
+    string,
+    ('R, exn, 'b, (('R, 'D) #fail' as 'D)) er )
+  format6 ->
+  'a

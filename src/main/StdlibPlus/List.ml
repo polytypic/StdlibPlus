@@ -1,11 +1,10 @@
-open Functor.Syntax
-open Applicative.Syntax
-open Monad.Syntax
+open Rea
 open Compare.Syntax
 
 (* *)
 
 include Stdlib.List
+include StdRea.List
 
 let rec map xy ys = function x :: xs -> map xy (xy x :: ys) xs | [] -> rev ys
 let map xy = map xy []
@@ -26,22 +25,22 @@ let rec compare_with compare xs ys =
   | _, [] -> 1
   | x :: xs, y :: ys -> compare x y <>? fun () -> compare_with compare xs ys
 
-let rec map_phys_eq fn inn =
+let rec map_eq fn inn =
   match inn with
   | [] -> inn
   | x :: xs as inn ->
     let x' = fn x in
-    let xs' = map_phys_eq fn xs in
+    let xs' = map_eq fn xs in
     if x == x' && xs == xs' then inn else x' :: xs'
 
-let rec share_phys_eq share_phys_eq_elem original changed =
+let rec share_eq share_eq_elem original changed =
   match (original, changed) with
   | [], [] -> original
   | o :: os, c :: cs ->
-    let cs = share_phys_eq share_phys_eq_elem os cs in
-    let c = share_phys_eq_elem o c in
+    let cs = share_eq share_eq_elem os cs in
+    let c = share_eq_elem o c in
     if os == cs && o == c then original else c :: cs
-  | _ -> raise @@ Invalid_argument "List.share_phys_eq"
+  | _ -> raise @@ Invalid_argument "List.share_eq"
 
 let find_dup_opt cmp xs =
   let rec loop = function
@@ -52,125 +51,87 @@ let find_dup_opt cmp xs =
 
 (* *)
 
-let rec fold_left3 xyzwx x ys zs ws =
+let rec fold_left'3 xyzwx x ys zs ws =
   match (ys, zs, ws) with
-  | y :: ys, z :: zs, w :: ws -> fold_left3 xyzwx (xyzwx x y z w) ys zs ws
+  | y :: ys, z :: zs, w :: ws -> fold_left'3 xyzwx (xyzwx x y z w) ys zs ws
   | [], [], [] -> x
-  | _ -> raise @@ Invalid_argument "fold_left3"
+  | _ -> raise @@ Invalid_argument "fold_left'3"
 
 (* *)
 
-let rec fold_left_fr xyx x = function
-  | [] -> return x
-  | y :: ys -> xyx x y >>= fun x -> fold_left_fr xyx x ys
+let rec fold_left_er xyx x = function
+  | [] -> pure x
+  | y :: ys -> xyx x y >>= fun x -> fold_left_er xyx x ys
 
-let rec fold_left2_fr xyzx x ys zs =
+let rec fold_left_er'2 xyzx x ys zs =
   match (ys, zs) with
-  | y :: ys, z :: zs -> xyzx x y z >>= fun x -> fold_left2_fr xyzx x ys zs
-  | [], [] -> return x
-  | _ -> raise @@ Invalid_argument "fold_left2_fr"
+  | y :: ys, z :: zs -> xyzx x y z >>= fun x -> fold_left_er'2 xyzx x ys zs
+  | [], [] -> pure x
+  | _ -> raise @@ Invalid_argument "fold_left_er'2"
 
-let rec fold_left3_fr xyzwx x ys zs ws =
+let rec fold_left_er'3 xyzwx x ys zs ws =
   match (ys, zs, ws) with
   | y :: ys, z :: zs, w :: ws ->
-    xyzwx x y z w >>= fun x -> fold_left3_fr xyzwx x ys zs ws
-  | [], [], [] -> return x
-  | _ -> raise @@ Invalid_argument "fold_left3_fr"
+    xyzwx x y z w >>= fun x -> fold_left_er'3 xyzwx x ys zs ws
+  | [], [], [] -> pure x
+  | _ -> raise @@ Invalid_argument "fold_left_er'3"
 
 (* *)
 
-let rec iter_fr xy = function
-  | x :: xs -> xy x >>= fun () -> iter_fr xy xs
+let rec iter_er xy = function
+  | x :: xs -> xy x >>= fun () -> iter_er xy xs
   | [] -> unit
 
-let rec iter2_fr xyuF xs ys =
+let rec iter_er'2 xyuF xs ys =
   match (xs, ys) with
-  | x :: xs, y :: ys -> xyuF x y >>= fun () -> iter2_fr xyuF xs ys
+  | x :: xs, y :: ys -> xyuF x y >>= fun () -> iter_er'2 xyuF xs ys
   | [], [] -> unit
-  | _ -> raise @@ Invalid_argument "iter2_fr"
+  | _ -> raise @@ Invalid_argument "iter_er'2"
 
-let rec iter3_fr xywuF xs ys ws =
+let rec iter_er'3 xywuF xs ys ws =
   match (xs, ys, ws) with
   | x :: xs, y :: ys, w :: ws ->
-    xywuF x y w >>= fun () -> iter3_fr xywuF xs ys ws
+    xywuF x y w >>= fun () -> iter_er'3 xywuF xs ys ws
   | [], [], [] -> unit
-  | _ -> raise @@ Invalid_argument "iter3_fr"
+  | _ -> raise @@ Invalid_argument "iter_er'3"
 
 (* *)
 
-let rec for_all_fr p = function
-  | x :: xs -> p x &&& for_all_fr p xs
-  | [] -> return true
+let rec for_all_er p =
+  eta'1 @@ function x :: xs -> p x &&& for_all_er p xs | [] -> pure true
 
-let rec exists_fr p = function
-  | x :: xs -> p x ||| exists_fr p xs
-  | [] -> return false
+let rec exists_er p =
+  eta'1 @@ function x :: xs -> p x ||| exists_er p xs | [] -> pure false
 
 (* *)
 
-let rec find_opt_fr p = function
-  | x :: xs -> p x >>= fun b -> if b then return @@ Some x else find_opt_fr p xs
-  | [] -> return None
+let rec find_opt_er p =
+  eta'1 @@ function
+  | x :: xs -> p x >>= fun b -> if b then pure @@ Some x else find_opt_er p xs
+  | [] -> pure None
 
 (* *)
 
-let rec map_m xyF = function
-  | x :: xs ->
-    let* y = xyF x in
-    let+ ys = map_m xyF xs in
-    y :: ys
-  | [] -> return []
-
-let rec map_fr xyF ysF = function
-  | x :: xs -> map_fr xyF (xyF x <*> ysF >>- fun (y, ys) -> y :: ys) xs
-  | [] -> ysF >>- rev
-
-let map_fr xyF = map_fr xyF (return [])
-
-let rec map2_fr xyzF zsF xs ys =
+let rec map_er'2 xyzF zsF xs ys =
   match (xs, ys) with
   | x :: xs, y :: ys ->
-    map2_fr xyzF (xyzF x y <*> zsF >>- fun (z, zs) -> z :: zs) xs ys
+    map_er'2 xyzF (xyzF x y <*> zsF >>- fun (z, zs) -> z :: zs) xs ys
   | [], [] -> zsF >>- rev
-  | _ -> raise @@ Invalid_argument "map2_fr"
+  | _ -> raise @@ Invalid_argument "map_er'2"
 
-let map2_fr xyzF = map2_fr xyzF (return [])
-
-let rec map_phys_eq_fr fn inn =
-  match inn with
-  | x :: xs as inn ->
-    let+ x' = fn x and+ xs' = map_phys_eq_fr fn xs in
-    if x == x' && xs == xs' then inn else x' :: xs'
-  | [] -> return inn
+let map_er'2 xyzF = map_er'2 xyzF (pure [])
 
 (* *)
 
-let rec filter_fr fn = function
-  | [] -> return []
+let rec filter_er fn = function
+  | [] -> pure []
   | x :: xs -> (
-    fn x <*> filter_fr fn xs >>- function b, xs -> if b then x :: xs else xs)
+    fn x <*> filter_er fn xs >>- function b, xs -> if b then x :: xs else xs)
 
 (* *)
 
-let rec find_map_fr fn = function
-  | [] -> return None
+let rec find_map_er fn =
+  eta'1 @@ function
+  | [] -> pure None
   | x :: xs -> (
-    fn x >>= function None -> find_map_fr fn xs | some -> return some)
-
-(* *)
-
-include Higher.New'1 (Stdlib.List) ()
-
-type 'a fr = < f Monad.t ; f Alternative.t > -> 'a f'1
-
-let methods =
-  object
-    inherit [_] Monad.t
-    method return x = inj [x]
-    method bind xyF xF = inj (concat_map (fun x -> prj (xyF x)) (prj xF))
-    inherit [_] Alternative.t
-    method zero = inj []
-    method alt lA rA = inj (append (prj lA) (prj rA))
-  end
-
-let run xF = xF methods |> prj
+    fn x >>= function None -> find_map_er fn xs | some -> pure some)

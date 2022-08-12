@@ -1,3 +1,4 @@
+open Rea
 open Fun.Syntax
 
 module type OrderedType = Stdlib.Map.OrderedType
@@ -8,8 +9,10 @@ module type S = sig
   val add_list : (key * 'v) list -> 'v t -> 'v t
   val of_list : (key * 'v) list -> 'v t
 
-  val exists_fr :
-    (key -> 'v -> ('f, bool, 'D) Monad.r) -> 'v t -> ('f, bool, 'D) Monad.r
+  val exists_er :
+    (key -> 'v -> ('R, 'e, bool, (('R, 'D) #monad' as 'D)) er) ->
+    'v t ->
+    ('R, 'e, bool, 'D) er
 end
 
 module Make (Ord : OrderedType) = struct
@@ -17,7 +20,7 @@ module Make (Ord : OrderedType) = struct
 
   let add_list kvs = List.to_seq kvs |> add_seq
   let of_list kvs = List.to_seq kvs |> of_seq
-  let exists_fr fn = to_seq >>> Seq.exists_fr (uncurry fn)
+  let exists_er fn = to_seq >>> Seq.exists_er (uncurry fn)
 end
 
 let prefer_lhs _ l r =

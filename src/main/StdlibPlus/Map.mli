@@ -1,3 +1,4 @@
+open Rea
 open Misc.Syntax
 
 module type OrderedType = Stdlib.Map.OrderedType
@@ -8,8 +9,10 @@ module type S = sig
   val add_list : (key * 'v) list -> 'v t uop
   val of_list : (key * 'v) list -> 'v t
 
-  val exists_fr :
-    (key -> 'v -> ('f, bool, 'D) Monad.r) -> 'v t -> ('f, bool, 'D) Monad.r
+  val exists_er :
+    (key -> 'v -> ('R, 'e, bool, (('R, 'D) #monad' as 'D)) er) ->
+    'v t ->
+    ('R, 'e, bool, 'D) er
 end
 
 module Make : functor (Ord : OrderedType) -> S with type key = Ord.t

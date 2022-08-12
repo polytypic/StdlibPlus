@@ -1,3 +1,4 @@
+open Rea
 open Misc.Syntax
 
 val set_fst : 'a * 'b -> 'c -> 'c * 'b
@@ -7,19 +8,19 @@ val swap : 'a * 'b -> 'b * 'a
 (** Swap elements of a pair. *)
 
 val map : ('a -> 'b) -> ('c -> 'd) -> 'a * 'c -> 'b * 'd
-val map_phys_eq : 'a uop -> 'b uop -> ('a * 'b) uop
-val share_phys_eq : 'a bop -> 'b bop -> ('a * 'b) bop
+val map_eq : 'a uop -> 'b uop -> ('a * 'b) uop
+val share_eq : 'a bop -> 'b bop -> ('a * 'b) bop
 
 (* *)
 
-val map_fr :
-  ('a -> ('f, 'b, 'D) Applicative.r) ->
-  ('c -> ('f, 'd, 'D) Applicative.r) ->
+val map_er :
+  ('a -> ('R, 'e, 'b, (('R, 'D) #applicative' as 'D)) er) ->
+  ('c -> ('R, 'e, 'd, 'D) er) ->
   'a * 'c ->
-  ('f, 'b * 'd, 'D) Applicative.r
+  ('R, 'e, 'b * 'd, 'D) er
 
-val map_phys_eq_fr :
-  ('a -> ('f, 'a, 'D) Applicative.r) ->
-  ('b -> ('f, 'b, 'D) Applicative.r) ->
+val map_eq_er :
+  ('a -> ('R, 'e, 'a, (('R, 'D) #applicative' as 'D)) er) ->
+  ('b -> ('R, 'e, 'b, 'D) er) ->
   'a * 'b ->
-  ('f, 'a * 'b, 'D) Applicative.r
+  ('R, 'e, 'a * 'b, 'D) er

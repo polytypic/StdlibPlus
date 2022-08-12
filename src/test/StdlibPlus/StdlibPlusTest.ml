@@ -1,3 +1,4 @@
+open Rea
 open StdlibPlus
 open MuTest
 
@@ -15,16 +16,16 @@ let () =
     ("/foo/bar/../../../baz", "/../baz");
     ("/foo/bar/../../../../baz", "/../../baz");
   ]
-  |> List.iter_fr @@ fun (to_canonize, expected) ->
+  |> List.iter_er @@ fun (to_canonize, expected) ->
      let actual = Filename.canonic to_canonize in
      if actual <> expected then
        failuref "Expected: %s\nActual:   %s\n" expected actual
      else unit
 
 let () =
-  test "List.map_fr" @@ fun () ->
+  test "List.map_er" @@ fun () ->
   let xs = [3; 1; 4; 1] in
-  let* ys = xs |> List.map_fr (( + ) 1 >>> return) in
+  let* ys = xs |> List.map_er (( + ) 1 >>> pure) in
   verify (List.map (( + ) 1) xs = ys)
 
 let () =
