@@ -15,6 +15,17 @@ module Syntax : sig
   (* *)
 
   val pure'0 : (unit -> 'a) -> ('R, 'e, 'a, (('R, 'D) #pure' as 'D)) er
+  val pure'1 : ('b1 -> 'a) -> 'b1 -> ('R, 'e, 'a, (('R, 'D) #pure' as 'D)) er
+
+  val pure'2 :
+    ('b1 -> 'b2 -> 'a) -> 'b1 -> 'b2 -> ('R, 'e, 'a, (('R, 'D) #pure' as 'D)) er
+
+  val pure'3 :
+    ('b1 -> 'b2 -> 'b3 -> 'a) ->
+    'b1 ->
+    'b2 ->
+    'b3 ->
+    ('R, 'e, 'a, (('R, 'D) #pure' as 'D)) er
 
   (* *)
 

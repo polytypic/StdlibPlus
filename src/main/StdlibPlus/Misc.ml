@@ -15,6 +15,9 @@ module Syntax = struct
   (* *)
 
   let pure'0 ux (d : (_, _) #pure') = d#pure' (ux ())
+  let pure'1 x1y x1 (d : (_, _) #pure') = d#pure' (x1y x1)
+  let pure'2 x1x2y x1 x2 (d : (_, _) #pure') = d#pure' (x1x2y x1 x2)
+  let pure'3 x1x2x3y x1 x2 x3 (d : (_, _) #pure') = d#pure' (x1x2x3y x1 x2 x3)
 
   (* *)
 
