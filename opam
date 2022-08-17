@@ -11,6 +11,5 @@ dev-repo: "git+https://github.com/polytypic/StdlibPlus.git"
 depends: [
   "dune"
   "ocaml"
-  "uutf"
   "rea"
 ]
