@@ -1,4 +1,8 @@
-include Map.OrderedType
+open Concepts.Syntax
+
+type t
+
+include OrderedType with type t := t
 
 val of_utf8_json : string -> t
 val to_utf8_json : t -> string

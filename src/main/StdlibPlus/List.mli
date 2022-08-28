@@ -1,5 +1,5 @@
 open Rea
-open Misc.Syntax
+open Concepts.Syntax
 include module type of Stdlib.List
 include module type of StdRea.List
 

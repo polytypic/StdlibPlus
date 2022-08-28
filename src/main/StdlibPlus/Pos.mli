@@ -1,3 +1,5 @@
+open Concepts.Syntax
+
 type t = Lexing.position
 
 (* Constructors *)
@@ -10,8 +12,8 @@ val column_of : t -> int
 
 (* Comparison *)
 
-val compare : t -> t -> int
-val equal : t -> t -> bool
+include OrderedType with type t := t
+include EqualityType with type t := t
 
 (* *)
 

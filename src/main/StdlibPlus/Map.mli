@@ -1,7 +1,7 @@
 open Rea
-open Misc.Syntax
+open Concepts.Syntax
 
-module type OrderedType = Stdlib.Map.OrderedType
+module type OrderedType = OrderedType
 
 module type S = sig
   include Stdlib.Map.S

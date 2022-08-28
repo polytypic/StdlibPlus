@@ -1,6 +1,25 @@
 open Rea
 
 module Syntax = struct
+  type 'a uop = 'a -> 'a
+  type 'a bop = 'a -> 'a -> 'a
+  type 'a bpr = 'a -> 'a -> bool
+  type 'a cmp = 'a -> 'a -> int
+
+  module type StringableType = sig
+    type t
+
+    val to_string : t -> string
+  end
+
+  module type EqualityType = sig
+    type t
+
+    val equal : t bpr
+  end
+
+  module type OrderedType = Stdlib.Set.OrderedType
+
   module type Traversable'1 = sig
     type 'x1 f'1
 

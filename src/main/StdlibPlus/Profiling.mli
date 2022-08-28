@@ -1,4 +1,4 @@
-open Misc.Syntax
+open Concepts.Syntax
 
 module Counter : sig
   type t

@@ -1,5 +1,8 @@
+open Concepts.Syntax
+
 type t
 
 val str : string -> t
 val ( ^ ) : t -> t -> t
-val to_string : t -> string
+
+include StringableType with type t := t

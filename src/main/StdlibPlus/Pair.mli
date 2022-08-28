@@ -1,5 +1,5 @@
 open Rea
-open Misc.Syntax
+open Concepts.Syntax
 
 val set_fst : 'a * 'b -> 'c -> 'c * 'b
 val set_snd : 'a * 'b -> 'c -> 'a * 'c

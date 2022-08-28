@@ -1,3 +1,5 @@
+open Concepts.Syntax
+
 type t = int array
 
 val distances :
@@ -10,7 +12,7 @@ val distances :
  * Starting at index 3 are distances between pattern and text.
  *)
 
-val compare : t -> t -> int
+include OrderedType with type t := t
 (** Compare distances computed by `distances`.  This is almost a lexicographic
  * comparison except that the shorter array is extended to match the longer
  * array as if the corresponding text would have continued with non-matching

@@ -1,5 +1,5 @@
+open Concepts.Syntax
 include module type of Stdlib.String
-open Misc.Syntax
 
 val is_prefix : string bpr
 val is_suffix : string bpr

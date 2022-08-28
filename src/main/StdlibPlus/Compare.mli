@@ -1,4 +1,4 @@
-open Misc.Syntax
+open Concepts.Syntax
 
 val as_cases : int -> [`Lt | `Eq | `Gt]
 

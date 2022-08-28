@@ -1,4 +1,4 @@
-open Misc.Syntax
+open Concepts.Syntax
 
 let as_cases c = if c < 0 then `Lt else if 0 < c then `Gt else `Eq
 

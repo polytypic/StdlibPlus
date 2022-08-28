@@ -2,6 +2,7 @@ module Array = Array
 module Cat = Cat
 module Cats = Cats
 module Compare = Compare
+module Concepts = Concepts
 module EditDistance = EditDistance
 module Exn = Exn
 module Filename = Filename
@@ -19,13 +20,12 @@ module Seq = Seq
 module Set = Set
 module Sq = Sq
 module String = String
-module Traversable = Traversable
 module UTF = UTF
 
 (* *)
 
 include Compare.Syntax
+include Concepts.Syntax
 include Exn.Syntax
 include Fun.Syntax
 include Misc.Syntax
-include Traversable.Syntax
