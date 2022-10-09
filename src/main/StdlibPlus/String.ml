@@ -11,7 +11,9 @@ let is_suffix s1 s2 =
 let drop n s = sub s n (length s - n)
 let drop_last n s = sub s 0 (length s - n)
 let split n s = (sub s 0 n, drop n s)
-let index_from_opt s i c = try Some (index_from s i c) with Not_found -> None
+
+let index_from_opt s i c =
+  match index_from s i c with v -> Some v | exception Not_found -> None
 
 let split_on_char c s =
   let rec loop ss i =
