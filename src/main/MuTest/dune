@@ -1,3 +1,4 @@
 (library
  (name MuTest)
- (libraries StdlibPlus rea))
+ (public_name mutest)
+ (libraries stdlibplus rea))

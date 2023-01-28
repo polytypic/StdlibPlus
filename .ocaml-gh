@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PROJECT=StdlibPlus
+export GIT_DEPS=()
+export GIT=git@github.com:polytypic/$PROJECT.git

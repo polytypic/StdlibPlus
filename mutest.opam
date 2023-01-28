@@ -1,5 +1,4 @@
 opam-version: "2.0"
-name: "StdlibPlus"
 version: "0.0"
 synopsis: "Extensions to OCaml's Stdlib"
 maintainer: "Vesa Karvonen <vesa.a.j.k@gmail.com>"
@@ -9,7 +8,10 @@ homepage: "https://github.com/polytypic/StdlibPlus"
 bug-reports: "https://github.com/polytypic/StdlibPlus/issues"
 dev-repo: "git+https://github.com/polytypic/StdlibPlus.git"
 depends: [
-  "dune"
-  "ocaml"
-  "rea"
+  "dune" {>= "3.3.0"}
+  "ocaml" {>= "4.14.1"}
+  "rea" {>= "1.0.0"}
+  "stdlibplus"
+  "odoc" {>= "2.1.1" & with-doc}
 ]
+build: ["dune" "build" "-p" name "-j" jobs]
